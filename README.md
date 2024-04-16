@@ -18,24 +18,24 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Adminxyz22#' -p 1433:1433 -d mcr.m
 sudo docker exec -it sql1 "bash"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Adminxyz22#"
 ```
-Create database in mssql CLI:
+5.Create database in mssql CLI:
 ```bash
 CREATE DATABASE apbd
 GO
 
 ```
-5. Create table in mssqli CLI:
+6. Create table in mssqli CLI:
 ```bash
 USE apbd
 GO
 CREATE TABLE Animal (IdAnimal int  NOT NULL IDENTITY(1,1), Name nvarchar(200)  NOT NULL, Description nvarchar(200)  NULL, Category nvarchar(200)  NOT NULL, Area nvarchar(200)  NOT NULL, CONSTRAINT IdAnimal
 GO
 ```
-6. Fetch your own data
+7. Fetch your own data
   in mssqli CLI:
 ```bash
 INSERT INTO Animal VALUES ('ExampleName','ExampleDesc','ExampleCat','ExampleArea')
 GO
 ```
-7. Run REST application
+8. Run REST application
 

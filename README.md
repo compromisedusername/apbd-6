@@ -37,5 +37,5 @@ GO
 INSERT INTO Animal VALUES ('ExampleName','ExampleDesc','ExampleCat','ExampleArea')
 GO
 ```
-8. Run REST application
+8. Run API application
 

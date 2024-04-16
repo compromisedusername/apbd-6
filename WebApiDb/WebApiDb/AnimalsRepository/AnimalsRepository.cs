@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.OpenApi.Extensions;
 using WebApiDb.Controllers;
 using WebApiDb.Models;
 using WebApiDb.Models.DTOs;
@@ -11,6 +12,8 @@ public class AnimalsRepository : IAnimalsRepository
 
 {
 
+    
+    
     private readonly IConfiguration _configuration;
 
     public AnimalsRepository(IConfiguration configuration)
@@ -18,7 +21,7 @@ public class AnimalsRepository : IAnimalsRepository
         _configuration = configuration;
     }
 
-    public IEnumerable<Animal> GetAnimals()
+    public IEnumerable<Animal> GetAnimals(string orderBy)
     {
         using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
         connection.Open();
@@ -26,8 +29,8 @@ public class AnimalsRepository : IAnimalsRepository
         SqlCommand command = new SqlCommand();
         command.Connection = connection;
         
-        // command.CommandText = "INSERT INTO Animal VALUES ('Animal1','Desc1','Cat1','Area1');";
-        command.CommandText = "SELECT * FROM Animal;";
+        command.CommandText = "SELECT IdAnimal, Name, Description, Category, Area FROM Animal ORDER BY CASE WHEN @orderBy = 'name' THEN Name WHEN @orderBy = 'description' THEN Description WHEN @orderBy = 'area' THEN Area WHEN @orderBy = 'category' THEN Category ELSE Name END";
+        command.Parameters.AddWithValue("orderBy", orderBy);
 
         var animals = new List<Animal>();
         var reader = command.ExecuteReader();
@@ -71,5 +74,22 @@ public class AnimalsRepository : IAnimalsRepository
         command.Parameters.AddWithValue("animalArea", addAnimal.Area);
 
         command.ExecuteNonQuery();
+    }
+
+    public void UpdateAnimal(int id, AddAnimal animal)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RemoveAnimal(int id)
+    {
+        using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+        connection.Open();
+
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        
+        command.CommandText = "INSERT INTO Animal VALUES (@animalName,@animalDescription,@animalCategory,@animalArea);";
+
     }
 }

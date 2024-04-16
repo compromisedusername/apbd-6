@@ -1,4 +1,5 @@
 using WebApiDb.AnimalsRepository;
+using WebApiDb.AnimalsService;
 using WebApiDb.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IAnimalsRepository, AnimalsRepository>();
+builder.Services.AddScoped<IAnimalsService, AnimalsService>();
 var app = builder.Build();
 
 app.Configuration.GetConnectionString("Default");

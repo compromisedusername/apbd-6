@@ -9,7 +9,6 @@ public class AddAnimal
     [MinLength(5)]
     public string Name { get; set; }
     
-    
     public string? Description { get; set; }
     
     [Required]

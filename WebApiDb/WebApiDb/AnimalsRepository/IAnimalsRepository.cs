@@ -7,7 +7,9 @@ namespace WebApiDb.AnimalsRepository;
 
 public interface IAnimalsRepository
 {
-    public IEnumerable<Animal> GetAnimals();
+    public IEnumerable<Animal> GetAnimals(string query);
     public void AddAnimal(AddAnimal addAnimal);
+    public void UpdateAnimal(int id, AddAnimal animal);
+    public void RemoveAnimal(int id);
 
 }

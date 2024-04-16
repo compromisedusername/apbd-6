@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using WebApiDb.AnimalsRepository;
+using WebApiDb.AnimalsService;
 using WebApiDb.Models;
 using WebApiDb.Models.DTOs;
 
@@ -10,26 +12,39 @@ namespace WebApiDb.Controllers;
 [Route("/api/[controller]")]
 public class AnimalsController : ControllerBase
 {
-    private readonly IAnimalsRepository _animalsesRepository;
+    private readonly IAnimalsService _animalsService;
     
-    public AnimalsController(IAnimalsRepository animalsesRepository)
+    public AnimalsController(IAnimalsService animalsService)
     {
-        _animalsesRepository = animalsesRepository;
+        _animalsService = animalsService;
     }
     
     [HttpGet]
-    public IActionResult GetAnimals()
+    public IActionResult GetAnimals([RegularExpression(@"name|description|area|category|()")]string orderBy = "")
     {
-        return Ok(_animalsesRepository.GetAnimals());
+        return Ok(_animalsService.GetAnimals(orderBy));
     }
 
     [HttpPost]
     public IActionResult AddAnimal(AddAnimal animal)
     {
        
-        _animalsesRepository.AddAnimal(animal);
+        _animalsService.AddAnimal(animal);
         
         // 201
         return Created("/api/animals", null);
+    }
+
+    [HttpDelete]
+    public IActionResult DeleteAnimal(int id)
+    {
+        _animalsService.RemoveAnimal(id);
+        return Ok();
+    }
+    [HttpPut]
+    public IActionResult UpdateAnimal(int id, AddAnimal animal)
+    {
+        _animalsService.UpdateAnimal(id,animal);
+        return Ok();
     }
 }

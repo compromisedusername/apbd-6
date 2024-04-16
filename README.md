@@ -1,9 +1,9 @@
 # apbd-6 API application
-
-## Using your own database.
+## Other DBs
 For working on your local machine change property `ConnectionStrings` in `appsettings.json`. 
 See more on: https://www.connectionstrings.com/
-## Using Docker 
+
+## Using DB in Docker 
 1. Install Docker
 2. Pull Image
 ```bash

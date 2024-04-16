@@ -35,13 +35,13 @@ public class AnimalsController : ControllerBase
         return Created("/api/animals", null);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public IActionResult DeleteAnimal(int id)
     {
         _animalsService.RemoveAnimal(id);
         return Ok();
     }
-    [HttpPut]
+    [HttpPut("{id:int}")]
     public IActionResult UpdateAnimal(int id, AddAnimal animal)
     {
         _animalsService.UpdateAnimal(id,animal);

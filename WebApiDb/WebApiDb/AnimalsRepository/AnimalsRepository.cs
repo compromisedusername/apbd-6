@@ -46,7 +46,7 @@ public class AnimalsRepository : IAnimalsRepository
         {
             animals.Add(new Animal()
             {
-                IdAnimal = reader.GetInt32(0),
+                IdAnimal = reader.GetInt32(idAnimalOrdinal),
                 Name = reader.GetString(nameOrdinal),
                 Category = reader.GetString(CategoryOrdinal),
                 Description = reader.GetString(DescriptionOrdinal),
@@ -57,6 +57,24 @@ public class AnimalsRepository : IAnimalsRepository
 
         return animals;
     }
+
+    public bool AnimalExists(int id)
+    {
+        using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+        connection.Open();
+
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+
+        command.CommandText = "SELECT 1 FROM Animal WHERE IdAnimal = @animalId";
+        command.Parameters.AddWithValue("animalId", id);
+
+        var reader = command.ExecuteReader();
+
+        return reader.HasRows;
+    }
+
+
 
     public void AddAnimal(AddAnimal addAnimal)
     {
@@ -78,7 +96,21 @@ public class AnimalsRepository : IAnimalsRepository
 
     public void UpdateAnimal(int id, AddAnimal animal)
     {
-        throw new NotImplementedException();
+        using SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("Default"));
+        connection.Open();
+
+        SqlCommand command = new SqlCommand();
+        command.Connection = connection;
+        
+        command.CommandText = "UPDATE Animal SET Name = @animalName, Description = @animalDescription, Category = @animalCategory, Area = @animalArea WHERE IdAnimal = @animalId;";
+        command.Parameters.AddWithValue("animalId", id);
+        
+        command.Parameters.AddWithValue("animalName", animal.Name);
+        command.Parameters.AddWithValue("animalDescription", animal.Description);
+        command.Parameters.AddWithValue("animalCategory", animal.Category);
+        command.Parameters.AddWithValue("animalArea", animal.Area);
+
+        command.ExecuteNonQuery();
     }
 
     public void RemoveAnimal(int id)
@@ -89,7 +121,10 @@ public class AnimalsRepository : IAnimalsRepository
         SqlCommand command = new SqlCommand();
         command.Connection = connection;
         
-        command.CommandText = "INSERT INTO Animal VALUES (@animalName,@animalDescription,@animalCategory,@animalArea);";
+        command.CommandText = "DELETE FROM Animal WHERE IdAnimal = @id;";
+        command.Parameters.AddWithValue("id", id);
+
+        command.ExecuteNonQuery();
 
     }
 }

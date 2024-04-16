@@ -11,5 +11,6 @@ public interface IAnimalsRepository
     public void AddAnimal(AddAnimal addAnimal);
     public void UpdateAnimal(int id, AddAnimal animal);
     public void RemoveAnimal(int id);
+    public bool AnimalExists(int id);
 
 }

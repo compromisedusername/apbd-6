@@ -10,6 +10,6 @@ public interface IAnimalsService
     public void AddAnimal(AddAnimal animal);
     public void UpdateAnimal(int id, AddAnimal animal);
     public void RemoveAnimal(int id);
-    
+
 
 }

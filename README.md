@@ -5,30 +5,30 @@ See more on: https://www.connectionstrings.com/
 
 ## Using DB in Docker 
 1. Install Docker
-in linux terminal:
+  in linux terminal:
 3. Pull Image
 ```bash
 docker pull mcr.microsoft.com/mssql/server:latest
 ```
 3. Start container
-in linux terminal:
+  in linux terminal:
 ```bash
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Adminxyz22#' -p 1433:1433 -d mcr.microsoft.com/mssql/server:latest -n sql1
 ```
 4. Create database
-in linux terminal:
+  in linux terminal:
 ```bash
 sudo docker exec -it sql1 "bash"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "Adminxyz22#"
 ```
-in mssql cli:
+  in mssql cli:
 ```bash
 CREATE DATABASE apbd
 GO
 
 ```
 5. Create table
-in mssqli cli:
+  in mssqli cli:
 ```bash
 USE apbd
 GO
@@ -36,7 +36,7 @@ CREATE TABLE Animal (IdAnimal int  NOT NULL IDENTITY(1,1), Name nvarchar(200)  N
 GO
 ```
 6. Fetch your own data
-in mssqli cli:
+  in mssqli cli:
 ```bash
 INSERT INTO Animal VALUES ('ExampleName','ExampleDesc','ExampleCat','ExampleArea')
 GO
